@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import ChildComponent from "./components/ChildComponent";
 import useCounter from "./hooks/useCounter";
 import useWindowSize from "./hooks/useWindowSize";
 import UserProvider from "./Context/userContext";
@@ -11,11 +10,14 @@ const App = () => {
   console.log(width);
   return (
     <>
-      <h2>Count: {count}</h2>
+      <h2>Counter using custom Hooks</h2>
+      <h3>Count: {count}</h3>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Increment</button>
       <button onClick={reset}>Reset</button>
-      <ChildComponent />
+      <br />
+      <br />
+      <hr />
       <UserProvider>
         <Consumer />
       </UserProvider>

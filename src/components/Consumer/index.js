@@ -4,7 +4,7 @@ const Test = () => {
   const [value, changeName] = useContext(UserContext);
   return (
     <>
-      <h1>Consumer components</h1>
+      <h3>Context cosumer component</h3>
       <h4>
         {value.firstName} {value.lastName}
       </h4>

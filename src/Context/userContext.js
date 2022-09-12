@@ -4,15 +4,15 @@ export const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
-    firstName: "Yash",
-    lastName: "Vishwakarma",
+    firstName: "abc",
+    lastName: "Test",
   });
 
   const changeName = () => {
     setUser({
       ...user,
-      firstName: "Anshu",
-      lastName: "Vishwakarma",
+      firstName: "cba",
+      lastName: "Test",
     });
   };
   return (
