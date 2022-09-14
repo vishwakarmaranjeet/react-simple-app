@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const Counter = () => {
+const StopWatchWithoutReducer = () => {
   const [counter, setCounter] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const intervalID = useRef();
+  const intervalID = useRef(0);
 
   const startStopCounter = () => {
     setIsRunning(!isRunning);
   };
+
   const resetCounter = () => {
     setCounter(0);
     clearInterval(intervalID.current);
@@ -21,12 +22,14 @@ const Counter = () => {
     }
     return () => {
       clearInterval(intervalID.current);
+      intervalID.current = 0;
     };
   }, [isRunning]);
 
   return (
     <>
-      <h2>Counter:{counter}</h2>
+      <h2>Stop watch without useReducer Hook</h2>
+      <h2>{counter}</h2>
       <button type="button" onClick={startStopCounter}>
         Start / Stop
       </button>
@@ -37,4 +40,4 @@ const Counter = () => {
   );
 };
 
-export default Counter;
+export default StopWatchWithoutReducer;

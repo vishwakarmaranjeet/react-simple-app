@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../Context/userContext";
+
 const Test = () => {
-  const [value, changeName] = useContext(UserContext);
+  const [value, updateDetails] = useContext(UserContext);
   return (
     <>
-      <h3>Context cosumer component</h3>
+      <h2>Context example cosumer component</h2>
       <h4>
-        {value.firstName} {value.lastName}
+        {value.firstName} {value.lastName} | {value.email}
       </h4>
-      <button onClick={changeName}>Change Name</button>
+      <button onClick={updateDetails}>Update Details</button>
     </>
   );
 };
