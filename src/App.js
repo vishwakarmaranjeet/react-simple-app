@@ -8,6 +8,7 @@ import StopWatchWithoutReducer from "./components/StopWatchWithoutReducer";
 import CounterWithCustomHook from "./components/CounterWithCustomHook";
 import ImageWithPreview from "./components/ImageWithPreview";
 import CounterWithCustomUseReducerHook from "./components/CounterWithCustomUseReducerHook";
+import APIRequest from "./components/APIRequest";
 import styles from "./App.module.css";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         </UserProvider>
         <ImageWithPreview />
         <CounterWithCustomUseReducerHook />
+        <APIRequest />
       </section>
     </>
   );
