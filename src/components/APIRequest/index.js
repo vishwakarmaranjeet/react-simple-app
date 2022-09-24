@@ -6,6 +6,7 @@ const baseURL = `https://jsonplaceholder.typicode.com/users`;
 const APIRequest = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [userName, setUserName] = useState("");
 
   const getUserList = () => {
     setIsLoading(true);
@@ -45,11 +46,26 @@ const APIRequest = () => {
     getUserList();
   }, []);
 
+  const getClickDetails = (e) => {
+    const userName = e.target.dataset.value;
+    setUserName(userName);
+  };
   const renderList = (data) => {
     return (
-      <ul>
+      <ul onClick={getClickDetails} style={{ paddingLeft: "16px" }}>
         {data.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <li
+            key={user.id}
+            data-value={user.name}
+            style={{
+              cursor: "pointer",
+              margin: "5px",
+              padding: "5px",
+              maxWidth: "max-content",
+            }}
+          >
+            {user.name}
+          </li>
         ))}
       </ul>
     );
@@ -61,6 +77,8 @@ const APIRequest = () => {
       ) : (
         userList && userList.length && renderList(userList)
       )}
+
+      {userName && <h4>You have clicked : {userName}</h4>}
     </>
   );
 };

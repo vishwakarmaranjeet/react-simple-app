@@ -12,6 +12,10 @@ h4,
 h5,
 h6 {
 } */
+ul,
+li {
+  padding: 0;
+}
 button,
 input,
 textarea,
