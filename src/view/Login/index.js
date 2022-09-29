@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({ username: "", password: "" });
 
-  const formDataHandler = (e) => {
+  const userInputHandler = (e) => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value.trim(),
     });
   };
 
-  const clearData = () => {
-    setUserData({ username: "", password: "" });
-  };
-  const submitFormHandler = () => {
+  const submitUserDataHandler = () => {
     if (userData.username == "" && userData.password == "") {
       return;
     }
@@ -23,16 +20,11 @@ const Login = () => {
       userData.username.toLocaleLowerCase() === "admin" &&
       userData.password.toLocaleLowerCase() === "admin"
     ) {
-      if (typeof localStorage !== undefined) {
-        try {
-          localStorage.setItem("isLoggedIn", true);
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      localStorage.setItem("isLoggedIn", true);
       navigate("/dashboard");
     }
   };
+
   return (
     <>
       <div
@@ -45,7 +37,7 @@ const Login = () => {
           type="text"
           placeholder="Username"
           name="username"
-          onChange={formDataHandler}
+          onChange={userInputHandler}
         />
         <br />
         <br />
@@ -53,11 +45,11 @@ const Login = () => {
           type="password"
           placeholder="Password"
           name="password"
-          onChange={formDataHandler}
+          onChange={userInputHandler}
         />
         <br />
         <br />
-        <button onClick={submitFormHandler}>Login</button>
+        <button onClick={submitUserDataHandler}>Login</button>
       </div>
     </>
   );
