@@ -15,6 +15,7 @@ import UseRefExample from "./components/UseRefExample";
 import styles from "./App.module.css";
 import CountWithOne from "./HOC/CountWithOne";
 import CountWithTwo from "./HOC/CountWithTwo";
+import BillCalculator from "./components/BillCalculator";
 // const Consumer = lazy(() => import("./components/Consumer"));
 // const CounterWithReducer = lazy(() =>
 //   import("./components/CounterWithReducer")
@@ -39,7 +40,6 @@ const App = () => {
   const width = useWindowSize();
   const [ref, isHovered] = useHover();
   console.log(`[Screen Width] - ${width}`);
-
   return (
     <>
       <section className={styles.container}>
@@ -63,6 +63,7 @@ const App = () => {
         <CountWithOne />
         <CountWithTwo />
         <Posts />
+        <BillCalculator />
       </section>
     </>
   );
