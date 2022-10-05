@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import FolderIcon from "@mui/icons-material/Folder";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddToFavourite from "../../components/AddToFavourite";
 
 const Dashboard = () => {
   let navigate = useNavigate();
@@ -31,7 +32,7 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  function generate(element: React.ReactElement) {
+  function generate(element) {
     return [0, 1, 2].map((value) =>
       React.cloneElement(element, {
         key: value,
@@ -40,7 +41,7 @@ const Dashboard = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main">
       <Box
         sx={{
           marginTop: 8,
@@ -52,7 +53,7 @@ const Dashboard = () => {
         <Typography component="h1" variant="h4">
           Welcome to dashboard
         </Typography>
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           {generate(
             <List>
               <ListItem
@@ -74,7 +75,7 @@ const Dashboard = () => {
               </ListItem>
             </List>
           )}
-        </Grid>
+        </Grid> */}
 
         <Button
           type="button"
@@ -86,6 +87,7 @@ const Dashboard = () => {
           Logout
         </Button>
       </Box>
+      <AddToFavourite />
     </Container>
   );
 };
