@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import AddToFavourite from "../../components/AddToFavourite";
 
 const Dashboard = () => {
+  let { state } = useLocation();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -42,8 +43,9 @@ const Dashboard = () => {
         }}
       >
         <Typography component="h1" variant="h4">
-          Welcome to dashboard
+          Welcome to {state.username}
         </Typography>
+
         {/* <Grid item xs={12} md={6}>
           {generate(
             <List>

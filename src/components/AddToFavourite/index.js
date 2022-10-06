@@ -12,10 +12,16 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
 import { makeStyles } from "@material-ui/styles";
+import { reducer } from "./reducer";
+import {
+  GET_SUCCESS,
+  GET_ERROR,
+  ADD_TO_FAVOURITE,
+  REMOVE_TO_FAVOURITE,
+  TAB_CHANGES,
+} from "./actions";
 
 const LINES_TO_SHOW = 2;
-
-// src: https://stackoverflow.com/a/13924997/8062659
 const useStyles = makeStyles({
   multiLineEllipsis: {
     overflow: "hidden",
@@ -28,6 +34,16 @@ const useStyles = makeStyles({
 
 const API_URL = `https://dummyjson.com/products`;
 
+const TABS_DATA = [
+  {
+    id: 1,
+    label: "Products",
+  },
+  {
+    id: 2,
+    label: "My Favourite",
+  },
+];
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
   return (
@@ -50,42 +66,6 @@ let initialState = {
   value: 0,
 };
 
-const actionType = {
-  GET_REQUESTED: "GET_REQUESTED",
-  GET_SUCCESS: "GET_SUCCESS",
-  GET_ERROR: "GET_ERROR",
-  ADD_TO_FAVOURITE: "ADD_TO_FAVOURITE",
-  REMOVE_TO_FAVOURITE: "REMOVE_TO_FAVOURITE",
-  TAB_CHANGES: "TAB_CHANGES",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case actionType.GET_SUCCESS:
-      return { ...state, productList: action.payload, isLoader: false };
-    case actionType.GET_ERROR:
-      return { ...state, isLoader: false };
-    case actionType.ADD_TO_FAVOURITE:
-      if (!state.favouriteList.includes(action.payload)) {
-        return {
-          ...state,
-          favouriteList: [...state.favouriteList, action.payload],
-        };
-      } else {
-        return { ...state };
-      }
-    case actionType.REMOVE_TO_FAVOURITE:
-      const filteredProduct = state.favouriteList.filter(
-        (item) => item.id !== action.payload.id
-      );
-      return { ...state, favouriteList: filteredProduct };
-    case actionType.TAB_CHANGES:
-      return { ...state, value: action.payload };
-    default:
-      return state;
-  }
-}
-
 const AddToFavourite = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -94,33 +74,34 @@ const AddToFavourite = () => {
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-      dispatch({ type: actionType.GET_SUCCESS, payload: data?.products });
+      dispatch({ type: GET_SUCCESS, payload: data?.products });
     } catch (e) {
       console.log("Error occured", e);
-      dispatch({ type: actionType.GET_ERROR });
+      dispatch({ type: GET_ERROR });
     }
   };
 
   const handleChange = (e, newValue) => {
-    dispatch({ type: actionType.TAB_CHANGES, payload: newValue });
+    dispatch({ type: TAB_CHANGES, payload: newValue });
   };
 
   // Add to favourite
   const addToFavoriteHandler = (item) => {
     dispatch({
-      type: actionType.ADD_TO_FAVOURITE,
+      type: ADD_TO_FAVOURITE,
       payload: item,
     });
   };
-  // Remove to favorite
+
+  // Remove from favorite
   const removeFavoriteHandler = (product) => {
     dispatch({
-      type: actionType.REMOVE_TO_FAVOURITE,
+      type: REMOVE_TO_FAVOURITE,
       payload: product,
     });
   };
 
-  const ifExists = (product) => {
+  const isExists = (product) => {
     if (
       state.favouriteList.filter((item) => item.id === product.id).length > 0
     ) {
@@ -130,7 +111,6 @@ const AddToFavourite = () => {
   };
 
   useEffect(() => {
-    dispatch({ type: actionType.GET_REQUESTED });
     getProduct();
   }, []);
 
@@ -158,26 +138,37 @@ const AddToFavourite = () => {
                   {product.description}
                 </Typography>
               </CardContent>
-              {!isFavourite && (
-                <CardActions>
+              <CardActions>
+                {!isFavourite ? (
                   <Button
                     type="button"
+                    color={isExists(product) ? "error" : "primary"}
                     variant="contained"
                     sx={{ mt: 0, mb: 1 }}
                     onClick={() =>
-                      ifExists(product)
+                      isExists(product)
                         ? removeFavoriteHandler(product)
                         : addToFavoriteHandler(product)
                     }
                   >
-                    {ifExists(product) ? "Remove" : "Add"}
+                    {isExists(product) ? "Remove" : "Add"}
                   </Button>
-                </CardActions>
-              )}
+                ) : (
+                  <Button
+                    type="button"
+                    color="error"
+                    variant="contained"
+                    sx={{ mt: 0, mb: 1 }}
+                    onClick={() => removeFavoriteHandler(product)}
+                  >
+                    Remove
+                  </Button>
+                )}
+              </CardActions>
             </Card>
           ))
         ) : (
-          <h2>Nothing is in the favourite list</h2>
+          <h2>Nothing is in your favourite list</h2>
         )}
       </>
     );
@@ -189,15 +180,23 @@ const AddToFavourite = () => {
         <Tabs
           value={state.value}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          aria-label="Product tabs"
         >
-          <Tab label="Products" />
-          <Tab label="My Favourite" />
+          {TABS_DATA.map((data) => (
+            <Tab label={data.label} />
+          ))}
         </Tabs>
       </Box>
       <TabPanel value={state.value} index={0}>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={3}>
+        <Box>
+          <Grid
+            container
+            spacing={3}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 2 }}
+          >
             {state.isLoader ? (
               <CircularProgress />
             ) : (
@@ -208,7 +207,14 @@ const AddToFavourite = () => {
       </TabPanel>
       <TabPanel value={state.value} index={1}>
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 2 }}
+          >
             {renderCards(state.favouriteList, true)}
           </Grid>
         </Box>

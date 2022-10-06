@@ -1,0 +1,6 @@
+export const GET_REQUESTED = "GET_REQUESTED";
+export const GET_SUCCESS = "GET_SUCCESS";
+export const GET_ERROR = "GET_ERROR";
+export const ADD_TO_FAVOURITE = "ADD_TO_FAVOURITE";
+export const REMOVE_TO_FAVOURITE = "REMOVE_TO_FAVOURITE";
+export const TAB_CHANGES = "TAB_CHANGES";

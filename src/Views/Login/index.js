@@ -28,7 +28,7 @@ const Login = () => {
       userData.password.toLocaleLowerCase() === "admin"
     ) {
       localStorage.setItem("isLoggedIn", true);
-      navigate("/dashboard");
+      navigate("/dashboard", { state: { username: userData.username } });
     }
   };
 
