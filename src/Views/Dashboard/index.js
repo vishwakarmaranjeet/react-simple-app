@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";
-import FolderIcon from "@mui/icons-material/Folder";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddToFavourite from "../../components/AddToFavourite";
 
 const Dashboard = () => {
   let navigate = useNavigate();
-  const [secondary, setSecondary] = useState(false);
+
   useEffect(() => {
     if (
       localStorage.getItem("isLoggedIn") === null ||
@@ -32,13 +23,13 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  function generate(element) {
-    return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
-        key: value,
-      })
-    );
-  }
+  // function generate(element) {
+  //   return [0, 1, 2].map((value) =>
+  //     React.cloneElement(element, {
+  //       key: value,
+  //     })
+  //   );
+  // }
 
   return (
     <Container component="main">
