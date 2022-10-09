@@ -43,7 +43,7 @@ const Dashboard = () => {
         }}
       >
         <Typography component="h1" variant="h4">
-          Welcome to {state.username}
+          Welcome to {state?.username}
         </Typography>
 
         {/* <Grid item xs={12} md={6}>

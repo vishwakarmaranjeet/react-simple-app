@@ -17,6 +17,7 @@ import CountWithTwo from "../../HOC/CountWithTwo";
 import BillCalculator from "../../components/BillCalculator";
 import Posts from "../../HOC/Post";
 import FormWithUseReducer from "../../components/FormWithUseReducer";
+import Parent from "../../components/UseImperativeHandle/Parent";
 // const Consumer = lazy(() => import("./components/Consumer"));
 // const CounterWithReducer = lazy(() =>
 //   import("./components/CounterWithReducer")
@@ -61,6 +62,7 @@ const Home = () => {
       <Posts />
       <BillCalculator />
       <FormWithUseReducer />
+      <Parent />
     </section>
   );
 };
