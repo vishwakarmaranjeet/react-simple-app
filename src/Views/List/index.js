@@ -1,8 +1,12 @@
 import React from "react";
-import Visualized from "../../components/Visualized";
+import ListCounter from "../../components/ListCounter";
 
 const List = () => {
-  return <Visualized />;
+  return (
+    <>
+      <ListCounter />
+    </>
+  );
 };
 
 export default List;
